@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>🛍️ TimelessVoyage DZ — Store</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+
+<style>
+  :root{ --gold1:#FFD66A; --gold2:#FFB703; --card-bg: rgba(0,0,0,0.55); --accent:#FF8C00; }
+  *{box-sizing:border-box}
+  body{ margin:0; font-family:'Poppins',sans-serif; background: linear-gradient(135deg,#1e1f2a,#2c2b3b); color:#fff; min-height:100vh; }
+  body.bg-loaded{ background: url('font.jpg') no-repeat center center fixed; background-size: cover; }
+
+  nav{ position:fixed; top:0; left:0; right:0; display:flex; justify-content:space-between; align-items:center; padding:14px 28px; background: rgba(0,0,0,0.45); z-index:120; backdrop-filter: blur(6px); }
+  .logo{ font-family:'Cinzel Decorative',cursive; font-size:20px; background: linear-gradient(90deg,var(--gold1),var(--gold2)); -webkit-background-clip:text; color:transparent; font-weight:700; }
+  nav .links a{ color:#fff; text-decoration:none; margin-left:18px; font-weight:600 } nav .links a:hover{ color:var(--gold1) }
+
+  header{ padding:100px 20px 18px; text-align:center; }
+  header h1{ font-family:'Cinzel Decorative',cursive; font-size:clamp(28px,5vw,48px); background:linear-gradient(90deg,var(--gold1),var(--gold2)); -webkit-background-clip:text; color:transparent; animation: shine 6s linear infinite; background-size:300% 300%; margin:0; }
+  @keyframes shine{ 0%{background-position:0% 50%} 100%{background-position:100% 50%} }
+  header p{ color:#f0e8d6; margin-top:8px; font-size:15px }
+
+  .controls{ max-width:1100px; margin:12px auto 0; padding:12px; display:flex; gap:12px; align-items:center; justify-content:center; flex-wrap:wrap }
+  .controls select, .controls button { padding:10px 14px; border-radius:10px; border:0; font-weight:700; cursor:pointer; }
+  .controls select { background:rgba(255,255,255,0.08); color:#fff; }
+  .controls button.filter-reset { background: linear-gradient(90deg,var(--gold1),var(--gold2)); color:#111; box-shadow:0 8px 30px rgba(255,183,3,0.12) }
+
+  main.store { max-width:1100px; margin:18px auto 60px; padding:18px; display:grid; grid-template-columns: repeat(auto-fill,minmax(240px,1fr)); gap:18px; }
+  .product{ background:var(--card-bg); border-radius:12px; padding:14px; text-align:center; box-shadow:0 8px 30px rgba(0,0,0,0.45); }
+  .product img{ width:100%; height:170px; object-fit:cover; border-radius:8px; margin-bottom:10px; background:#222 }
+  .product h3{ margin:6px 0; color:var(--gold1); font-size:18px; }
+  .desc { font-size:13px; margin:6px 0 }
+  .desc span{ display:none; margin:2px 0 }
+  .artisan { font-size:13px; color:#f0e8d6; margin-top:6px }
+  .price { font-weight:800; color:var(--accent); margin-top:8px; }
+  .buy-btn { display:inline-block; margin-top:10px; padding:10px 14px; border-radius:10px; background: linear-gradient(90deg,var(--gold1),var(--accent)); color:#111; text-decoration:none; font-weight:800; cursor:pointer; }
+
+  .hidden{ display:none !important; } .note { text-align:center; color:#ddd; margin-top:6px; font-size:13px }
+
+  /* missing images panel */
+  .missing-panel{ position:fixed; left:18px; bottom:18px; z-index:9999; background:rgba(0,0,0,0.75); color:#fff; border-left:4px solid #FF8C00; padding:12px 14px; border-radius:8px; max-width:320px; font-size:13px; box-shadow:0 8px 30px rgba(0,0,0,0.6); }
+  .missing-panel h4{ margin:0 0 6px 0; font-size:14px; color:var(--gold1) }
+  .missing-panel ul{ margin:0; padding-left:18px; max-height:160px; overflow:auto; }
+
+  /* language popup */
+  .lang-popup{ position:fixed; right:18px; bottom:70px; z-index:160; display:none; background: rgba(0,0,0,0.9); padding:8px; border-radius:10px; box-shadow:0 8px 30px rgba(0,0,0,0.6); }
+  .lang-popup button{ display:block; width:100%; padding:8px 12px; border-radius:8px; margin:6px 0; border:0; background:#111; color:#fff; cursor:pointer; font-weight:700; }
+  .lang-popup button.active{ background: linear-gradient(90deg,var(--gold1),var(--gold2)); color:#111; }
+
+  /* translator button */
+  .translator{ position:fixed; right:18px; bottom:18px; z-index:140; background:linear-gradient(90deg,var(--gold1),#FF8C00); color:#111; padding:10px 14px; border-radius:999px; font-weight:700; cursor:pointer; box-shadow:0 8px 30px rgba(0,0,0,0.4) }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">TimelessVoyage DZ</div>
+  <div class="links">
+    <a href="home.html">Home</a>
+    <a href="choix.html">Destinations</a>
+    <a href="era.html">Back to Era</a>
+  </div>
+</nav>
+
+<header>
+  <h1 id="storeTitle">🛍️ TimelessVoyage Store</h1>
+  <p id="storeSub">Discover and support artisans from Algeria’s cultural heritage.</p>
+</header>
+
+<div class="controls">
+  <label style="font-weight:700">Select region:</label>
+  <select id="regionSelect">
+    <option value="all">All regions</option>
+    <option value="Annaba">Annaba</option>
+    <option value="Tipaza">Tipaza</option>
+    <option value="Timgad">Timgad</option>
+    <option value="Djemila">Djemila</option>
+  </select>
+  <button class="filter-reset" id="resetBtn">Show All</button>
+</div>
+
+<main class="store" id="productsGrid">
+  <!-- FULL PRODUCT LIST (drop-in, make sure images exist in same folder) -->
+
+  <!-- Annaba -->
+  <article class="product" data-dest="Annaba">
+    <img src="potteryannaba.jpg" alt="Annaba Pottery" data-filename="potteryannaba.jpg">
+    <h3>Annaba Pottery</h3>
+    <div class="desc">
+      <span class="en">Pottery inspired by the ruins of Hippo Regius.</span>
+      <span class="ar">أواني فخارية مستوحاة من آثار هيبّو ريجيوس.</span>
+      <span class="fr">Poterie inspirée des vestiges d’Hippone.</span>
+    </div>
+    <div class="artisan">👤 Artisan: K. Yacine</div>
+    <div class="price">4,500 DA</div>
+    <button class="buy-btn" onclick="openPaymentModal('Annaba Pottery','potteryannaba.jpg','4,500 DA')">Buy Now</button>
+  </article>
+
+  <article class="product" data-dest="Annaba">
+    <img src="annabafabrics.jpg" alt="Annaba Fabrics" data-filename="annabafabrics.jpg">
+    <h3>Annaba Fabrics</h3>
+    <div class="desc">
+      <span class="en">Traditional fabrics with oriental patterns.</span>
+      <span class="ar">أقمشة منسوجة تقليدية بنقوش شرقية.</span>
+      <span class="fr">Tissus traditionnels aux motifs orientaux.</span>
+    </div>
+    <div class="artisan">👤 Artisan: S. Feriel</div>
+    <div class="price">8,000 DA</div>
+    <button class="buy-btn" onclick="openPaymentModal('Annaba Fabrics','annabafabrics.jpg','8,000 DA')">Buy Now</button>
+  </article>
+
+  <article class="product" data-dest="Annaba">
+    <img src="annabaceramic.jpg" alt="Annaba Ceramic" data-filename="annabaceramic.jpg">
+    <h3>Annaba Ceramics</h3>
+    <div class="desc">
+      <span class="en">Ceramics decorated with Roman and local patterns.</span>
+      <span class="ar">قطع خزفية بزخارف رومانية ومحلية.</span>
+      <span class="fr">Céramiques ornées de motifs romains et locaux.</span>
+    </div>
+    <div class="artisan">👤 Artisan: L. Mourad</div>
+    <div class="price">6,000 DA</div>
+    <button class="buy-btn" onclick="openPaymentModal('Annaba Ceramics','annabaceramic.jpg','6,000 DA')">Buy Now</button>
+  </article>
+
+  <article class="product" data-dest="Annaba">
+    <img src="gandouraelfetla.jpg" alt="Gandoura El Fetla" data-filename="gandouraelfetla.jpg">
+    <h3>Gandoura El Fetla (Annaba)</h3>
+    <div class="desc">
+      <span class="en">Elegant traditional gandoura embroidered with golden “fetla” threads.</span>
+      <span class="ar">قندورة فتلة لوشي أنيقة مطرزة بخيوط ذهبية.</span>
+      <span class="fr">Gandoura traditionnelle brodée avec des fils dorés “fetla”.</span>
+    </div>
+    <div class="artisan">👤 Artisan: A. Louchi</div>
+    <div class="price">18,000 DA</div>
+    <button class="buy-btn" onclick="openPaymentModal('Gandoura El Fetla (Annaba)','gandouraelfetla.jpg','18,000 DA')">Buy Now</button>
+  </article>
+
+  <article class="product" data-dest="Annaba">
+    <img src="kaftanelkranfla.jpg" alt="Kaftan El Kranfla" data-filename="kaftanelkranfla.jpg">
+    <h3>Kaftan El Kranfla (Annaba)</h3>
+    <div class="desc">
+      <span class="en">Luxurious kaftan with delicate “kranfla” embroidery from Annaba.</span>
+      <span class="ar">قفطان القرنفلة العنابي الفاخر مطرز بزخارف دقيقة.</span>
+      <span class="fr">Caftan luxueux brodé de motifs “kranfla” d’Annaba.</span>
+    </div>
+    <div class="artisan">👤 Artisan: N. Chérifa</div>
+    <div class="price">22,000 DA</div>
+    <button class="buy-btn" onclick="openPaymentModal('Kaftan El Kranfla (Annaba)','kaftanelkranfla.jpg','22,000 DA')">Buy Now</button>
+  </article>
+
+  <!-- Tipaza -->
+  <article class="product" data-dest="Tipaza">
+    <img src="tipaza_shawl.jpg" alt="Tipaza Shawl" data-filename="tipaza_shawl.jpg">
+    <h3>Tipaza Shawl</h3>
+    <div class="desc">
+      <span class="en">Embroidered shawl with traditional coastal techniques.</span>
+      <span class="ar">شال مطرّز بتقنيات تقليدية ساحلية.</span>
+      <span class="fr">Châle brodé avec des techniques côtières traditionnelles.</span>
+    </div>
+    <div class="artisan">👤 Artisan: L. Benaissa</div>
+    <div class="price">7,000 DA</div>
+    <button class="buy-btn" onclick="openPaymentModal('Tipaza Shawl','tipaza_shawl.jpg','7,000 DA')">Buy Now</button>
+  </article>
+
+  <!-- Timgad -->
+  <article class="product" data-dest="Timgad">
+    <img src="timgad_carpet.jpg" alt="Timgad Carpet" data-filename="timgad_carpet.jpg">
+    <h3>Timgad Carpet</h3>
+    <div class="desc">
+      <span class="en">Wool carpet from Aurès with Berber patterns.</span>
+      <span class="ar">سجاد صوفي من الأوراس بنقوش أمازيغية.</span>
+      <span class="fr">Tapis en laine de l’Aurès avec motifs berbères.</span>
+    </div>
+    <div class="artisan">👤 Artisan: F. Rahmani</div>
+    <div class="price">15,000 DA</div>
+    <button class="buy-btn" onclick="openPaymentModal('Timgad Carpet','timgad_carpet.jpg','15,000 DA')">Buy Now</button>
+  </article>
+
+  <!-- Djemila -->
+  <article class="product" data-dest="Djemila">
+    <img src="djemila_jeweleriy.jpg" alt="Djemila Jewelry" data-filename="djemila_jeweleriy.jpg">
+    <h3>Djemila Jewelry</h3>
+    <div class="desc">
+      <span class="en">Silver jewelry with Berber designs from Sétif.</span>
+      <span class="ar">قطع فضية بزخارف أمازيغية من سطيف.</span>
+      <span class="fr">Bijoux en argent avec motifs berbères de Sétif.</span>
+    </div>
+    <div class="artisan">👤 Artisan: Kahina B.</div>
+    <div class="price">9,500 DA</div>
+    <button class="buy-btn" onclick="openPaymentModal('Djemila Jewelry','djemila_jeweleriy.jpg','9,500 DA')">Buy Now</button>
+  </article>
+
+</main>
+
+<div class="note" id="noteText">💡 Tip: open <code>store.html?dest=Annaba</code> to view Annaba products only.</div>
+
+<!-- Payment Modal -->
+<div id="paymentModal" class="hidden" style="position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.8); display:flex; align-items:center; justify-content:center; z-index:200;">
+  <div style="background:#fff; color:#111; padding:20px; border-radius:12px; max-width:420px; width:92%; text-align:center; position:relative;">
+    <span onclick="closePaymentModal()" style="position:absolute;top:10px;right:14px;cursor:pointer;font-weight:bold">✖</span>
+    <img id="modalImg" src="" alt="" style="width:100%;max-height:200px;object-fit:cover;border-radius:8px;margin-bottom:12px;">
+    <h2 id="modalTitle"></h2>
+    <p id="modalPrice" style="font-weight:bold;color:#FF8C00;margin:6px 0"></p>
+
+    <label style="font-weight:600">Payment Method:</label><br>
+    <select id="paymentMethod" style="margin:8px 0;padding:8px;border-radius:6px;width:80%">
+      <option>Credit Card</option>
+      <option>PayPal</option>
+      <option>BaridiMob</option>
+    </select>
+
+    <button onclick="processPayment()" style="margin-top:10px;padding:10px 18px;border:none;border-radius:10px;background:linear-gradient(90deg,#FFD700,#FF8C00);font-weight:700;cursor:pointer">
+      Confirm Payment
+    </button>
+  </div>
+</div>
+
+<!-- Thank You Modal -->
+<div id="thankYouModal" class="hidden" style="position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.85); display:flex; align-items:center; justify-content:center; z-index:300;">
+  <div style="background:#fff; color:#111; padding:20px; border-radius:12px; max-width:420px; width:92%; text-align:center; position:relative;">
+    <h2 style="background:linear-gradient(90deg,#FFD700,#FF8C00);-webkit-background-clip:text;color:transparent;font-family:'Cinzel Decorative',cursive;">TimelessVoyage DZ</h2>
+    <p class="thanks en">🎉 Thank you for supporting Algerian artisans!</p>
+    <p class="thanks ar" style="display:none">🎉 شكراً لدعمكم للحرفيين الجزائريين!</p>
+    <p class="thanks fr" style="display:none">🎉 Merci de soutenir les artisans algériens !</p>
+
+    <button onclick="closeThankYou()" style="margin-top:14px;padding:10px 18px;border:none;border-radius:10px;background:linear-gradient(90deg,#FFD700,#FF8C00);font-weight:700;cursor:pointer">
+      Continue Shopping
+    </button>
+  </div>
+</div>
+
+<!-- Translator & language popup -->
+<div class="lang-popup" id="langPopup">
+  <button data-lang="en" class="lang-btn active">English</button>
+  <button data-lang="ar" class="lang-btn">العربية</button>
+  <button data-lang="fr" class="lang-btn">Français</button>
+</div>
+<button class="translator" id="translatorBtn">🌍 Translate</button>
+
+<!-- Missing panel container will be injected if needed -->
+
+<script>
+document.addEventListener('DOMContentLoaded', function(){
+  // elements
+  const regionSelect = document.getElementById('regionSelect');
+  const resetBtn = document.getElementById('resetBtn');
+  const products = Array.from(document.querySelectorAll('.product'));
+  const note = document.getElementById('noteText');
+  const storeTitle = document.getElementById('storeTitle');
+  const storeSub = document.getElementById('storeSub');
+  const params = new URLSearchParams(location.search);
+  const destParam = params.get('dest');
+
+  // show/hide region
+  function showRegion(region){
+    products.forEach(p => {
+      if(region === 'all' || p.dataset.dest.toLowerCase() === region.toLowerCase()){ p.classList.remove('hidden'); }
+      else p.classList.add('hidden');
+    });
+    if(region === 'all'){ storeTitle.innerText = '🛍️ TimelessVoyage Store'; storeSub.innerText = 'Discover and support artisans from Algeria’s cultural heritage.'; }
+    else { storeTitle.innerText = region + ' — Local Products Store'; storeSub.innerText = 'Explore authentic crafts from ' + region + '.'; }
+  }
+
+  if(destParam){ regionSelect.value = destParam; showRegion(destParam); note.innerText = "✅ Showing products from: " + destParam; setTimeout(()=>window.scrollTo({top:220,behavior:'smooth'}), 120); }
+  else { regionSelect.value = 'all'; showRegion('all'); }
+
+  regionSelect.addEventListener('change', (e)=> showRegion(e.target.value));
+  resetBtn.addEventListener('click', ()=>{ regionSelect.value='all'; showRegion('all'); });
+
+  // language handling
+  function setLanguage(lang){
+    document.querySelectorAll('.desc').forEach(desc=>{
+      desc.querySelectorAll('span').forEach(span=>{ span.style.display = span.classList.contains(lang) ? 'block' : 'none'; });
+    });
+    document.querySelectorAll('.thanks').forEach(p=>p.style.display = 'none');
+    const t = document.querySelector('.thanks.'+lang);
+    if(t) t.style.display = 'block';
+
+    // update active button
+    document.querySelectorAll('.lang-btn').forEach(b=> b.classList.toggle('active', b.dataset.lang === lang));
+  }
+  setLanguage('en'); // default English
+
+  // lang popup toggle
+  const translatorBtn = document.getElementById('translatorBtn');
+  const langPopup = document.getElementById('langPopup');
+  translatorBtn.addEventListener('click', ()=> langPopup.style.display = langPopup.style.display === 'block' ? 'none' : 'block');
+
+  // language buttons
+  document.querySelectorAll('.lang-btn').forEach(btn=>{
+    btn.addEventListener('click', ()=> { setLanguage(btn.dataset.lang); langPopup.style.display = 'none'; });
+  });
+
+  // background loader
+  const bg = new Image();
+  bg.onload = ()=> document.body.classList.add('bg-loaded');
+  bg.src = 'font.jpg';
+
+  // IMAGE CHECKER: show placeholder if missing and report missing files
+  const placeholder = 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(
+    '<svg xmlns="http://www.w3.org/2000/svg" width="800" height="450"><rect width="100%" height="100%" fill="#2b2b2b"/><text x="50%" y="50%" dy=".3em" fill="#999" font-family="Arial" font-size="20" text-anchor="middle">Image not found</text></svg>'
+  );
+  const missing = [];
+  const imgs = Array.from(document.querySelectorAll('main.store img'));
+  let checkCount = imgs.length;
+  imgs.forEach(imgEl=>{
+    const src = imgEl.getAttribute('src') || imgEl.dataset.filename || '';
+    // try load
+    const t = new Image();
+    t.onload = ()=> { if(--checkCount===0) finishCheck(); };
+    t.onerror = ()=> {
+      imgEl.src = placeholder;
+      imgEl.classList.add('img-missing');
+      missing.push(src || '(no-src)');
+      if(--checkCount===0) finishCheck();
+    };
+    t.src = src;
+  });
+
+  function finishCheck(){
+    if(missing.length){
+      const panel = document.createElement('div');
+      panel.className = 'missing-panel';
+      panel.innerHTML = `<h4>Missing images</h4>
+        <div style="font-size:12px;color:#ddd;margin-bottom:6px">These files could not be loaded from the project folder:</div>
+        <ul>${missing.map(n=>`<li>${n}</li>`).join('')}</ul>
+        <div style="margin-top:8px;font-size:12px;color:#f5e6c2">Fix: put the files in the same folder as store.html and match names (case sensitive).</div>
+        <button id="hideMissing" style="margin-top:8px;padding:6px 8px;border-radius:6px;border:0;background:var(--gold1);color:#111;cursor:pointer;font-weight:700">Hide</button>`;
+      document.body.appendChild(panel);
+      document.getElementById('hideMissing').addEventListener('click', ()=> panel.remove());
+    }
+  }
+
+  // expose openPaymentModal/processPayment to the global scope below
+});
+
+// Payment modal functions (global)
+function openPaymentModal(title,img,price){
+  document.getElementById('modalTitle').innerText = title;
+  document.getElementById('modalImg').src = img;
+  document.getElementById('modalPrice').innerText = price;
+  document.getElementById('paymentModal').classList.remove('hidden');
+}
+function closePaymentModal(){
+  document.getElementById('paymentModal').classList.add('hidden');
+}
+function processPayment(){
+  // simple simulation -> close payment modal & show thank-you
+  const method = document.getElementById('paymentMethod').value;
+  closePaymentModal();
+  // ensure thank-you language follows current selected language
+  const active = document.querySelector('.lang-btn.active');
+  const lang = active ? active.dataset.lang : 'en';
+  document.querySelectorAll('.thanks').forEach(p=>p.style.display='none');
+  const t = document.querySelector('.thanks.'+lang);
+  if(t) t.style.display = 'block';
+  document.getElementById('thankYouModal').classList.remove('hidden');
+}
+function closeThankYou(){
+  document.getElementById('thankYouModal').classList.add('hidden');
+}
+</script>
+
+</body>
+</html>

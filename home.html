@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TimelessVoyage DZ</title>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: url('font.jpg') center/cover no-repeat fixed;
+      color: #fff;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    /* Navbar */
+    nav {
+      display: flex;
+      justify-content: flex-end;
+      gap: 20px;
+      padding: 20px 40px;
+      background: rgba(0,0,0,0.4);
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 10;
+      font-weight: 600;
+    }
+    nav a {
+      color: #fff;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    nav a:hover {
+      color: #f0d28c;
+    }
+
+    /* Hero Section */
+    .hero {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 0 20px;
+      background: rgba(0,0,0,0.55);
+      position: relative;
+      z-index: 5;
+    }
+
+    /* Golden Title */
+    .hero h1 {
+      font-family: 'Cinzel Decorative', cursive;
+      font-size: clamp(40px, 7vw, 80px);
+      margin-bottom: 10px;
+      background: linear-gradient(45deg, #FFD700, #FFA500, #FFEF8B);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: shine 6s linear infinite;
+      background-size: 300% 300%;
+    }
+
+    /* Golden italic slogan */
+    .hero h2 {
+      font-size: clamp(20px, 3vw, 32px);
+      font-weight: 400;
+      margin-bottom: 20px;
+      font-style: italic;
+      background: linear-gradient(90deg, #FFD700, #FFB700, #FFF5CC);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    /* Paragraph */
+    .hero p {
+      max-width: 700px;
+      font-size: 18px;
+      line-height: 1.6;
+      margin-bottom: 30px;
+      color: #f5f5f5;
+    }
+
+    /* Button */
+    .btn {
+      display: inline-block;
+      padding: 14px 30px;
+      font-size: 18px;
+      font-weight: bold;
+      background: linear-gradient(135deg, #FFD700, #FFA500);
+      color: #2b1d0e;
+      border-radius: 8px;
+      text-decoration: none;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+      transition: 0.3s;
+    }
+    .btn:hover {
+      background: linear-gradient(135deg, #FFEF8B, #FFD700);
+      transform: scale(1.07);
+    }
+
+    /* Shine Animation */
+    @keyframes shine {
+      0% { background-position: 0% 50%; }
+      100% { background-position: 100% 50%; }
+    }
+
+    /* Particle Effect */
+    .particles {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      overflow: hidden;
+      pointer-events: none;
+    }
+
+    .particle {
+      position: absolute;
+      width: 4px;
+      height: 4px;
+      background: rgba(255, 215, 0, 0.8);
+      border-radius: 50%;
+      animation: floatParticle 10s linear infinite;
+    }
+
+    @keyframes floatParticle {
+      0% {
+        transform: translateY(100vh) scale(0.5);
+        opacity: 0;
+      }
+      50% {
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-10vh) scale(1);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation -->
+  <nav>
+    <a href="#">Home</a>
+    <a href="#about">About</a>
+    <a href="#experience">Experience</a>
+    <a href="#contact">Contact</a>
+  </nav>
+
+  <!-- Particles -->
+  <div class="particles">
+    <!-- توليد يدوي لبعض الجزيئات -->
+    <div class="particle" style="left:10%; animation-delay:0s;"></div>
+    <div class="particle" style="left:30%; animation-delay:2s;"></div>
+    <div class="particle" style="left:50%; animation-delay:4s;"></div>
+    <div class="particle" style="left:70%; animation-delay:1s;"></div>
+    <div class="particle" style="left:90%; animation-delay:3s;"></div>
+  </div>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <h1>TimelessVoyage DZ</h1>
+    <h2>Where history meets tomorrow.</h2>
+    <p>
+      Discover Algeria like never before — from Roman basilicas to vibrant markets, 
+      from ancient ruins to timeless traditions. TimelessVoyage DZ brings history to life 
+      through immersive journeys, AR/VR tours, and intelligent narration.
+    </p>
+    <a href="choose.html" class="btn">Start the Journey</a>
+  </section>
+</body>
+</html>

@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Era — TimelessVoyage DZ</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --gold1:#FFD66A; /* أخف قليلاً للانسجام */
+    --gold2:#FFB703;
+    --card-bg: rgba(0,0,0,0.55);
+    --accent:#FF8C00;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0;
+    font-family:'Poppins',sans-serif;
+    background: linear-gradient(135deg,#1e1f2a,#2c2b3b);
+    color:#fff;
+    min-height:100vh;
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+  }
+
+  /* NAV */
+  nav{
+    position:fixed; top:0; left:0; right:0;
+    display:flex; justify-content:space-between; align-items:center;
+    padding:14px 28px;
+    background: rgba(0,0,0,0.45);
+    z-index:120;
+    backdrop-filter: blur(6px);
+  }
+  .logo{ font-family:'Cinzel Decorative',cursive; font-size:20px;
+         background: linear-gradient(90deg,var(--gold1),var(--gold2));
+         -webkit-background-clip:text; color:transparent; font-weight:700; }
+  nav .links a{ color:#fff; text-decoration:none; margin-left:18px; font-weight:600}
+  nav .links a:hover{ color:var(--gold1) }
+
+  /* hero */
+  header{ padding:90px 20px 10px; text-align:center; }
+  header h1{
+    margin:0;
+    font-family:'Cinzel Decorative',cursive;
+    font-size:clamp(30px,5vw,56px);
+    background:linear-gradient(45deg,var(--gold1),#FFA500,var(--gold1));
+    -webkit-background-clip:text; color:transparent;
+    animation: shine 6s linear infinite; background-size:300% 300%;
+    letter-spacing:-2px;
+  }
+  @keyframes shine{ 0%{background-position:0% 50%} 100%{background-position:100% 50%} }
+  header p{ color: #f0e8d6; margin-top:8px; font-size:15px }
+
+  .container{ max-width:1100px; margin:0 auto; padding:18px; position:relative; z-index:10 }
+  .card{ background:var(--card-bg); border-radius:12px; padding:18px; margin:18px 0; box-shadow:0 8px 30px rgba(0,0,0,0.5); }
+
+  /* era buttons */
+  .era-row{ display:flex; gap:12px; justify-content:center; flex-wrap:wrap; margin-top:12px }
+  .eraBtn{
+    padding:10px 18px; border-radius:10px; border:0; cursor:pointer;
+    background: linear-gradient(135deg,var(--gold2),var(--gold1));
+    color:#2b1d0e; font-weight:700; box-shadow:0 6px 18px rgba(0,0,0,0.35);
+    transition: transform .22s ease, box-shadow .22s;
+  }
+  .eraBtn:hover{ transform:translateY(-3px); box-shadow:0 12px 30px rgba(0,0,0,0.45) }
+  .eraBtn.locked{ background:#444; color:#aaa; cursor:not-allowed; box-shadow:none }
+
+  /* images */
+  .images{ display:flex; gap:16px; justify-content:center; flex-wrap:wrap; margin-top:14px }
+  .images img{ width:300px; max-width:40%; border-radius:10px; box-shadow:0 6px 18px rgba(0,0,0,0.5) }
+
+  /* video */
+  .video{ margin-top:14px; text-align:center }
+  iframe, video{ width:100%; max-width:900px; border-radius:12px; box-shadow:0 6px 18px rgba(0,0,0,0.5) }
+
+  /* slogan */
+  .slogan{ text-align:center; color:var(--gold1); font-style:italic; font-weight:600; margin-top:18px }
+
+  /* Tours area */
+  .tours { text-align:center; margin-top:22px; display:flex; gap:12px; justify-content:center; flex-wrap:wrap; align-items:center; }
+  .tours .btn {
+    padding:12px 20px; border-radius:10px; border:0; cursor:pointer; font-weight:700;
+    box-shadow:0 6px 18px rgba(0,0,0,0.35);
+  }
+  .btn.free { background: linear-gradient(135deg,#4CAF50,#66C179); color:#fff; }
+  .btn.pay { background: linear-gradient(135deg,#555,#777); color:#eee; }
+  .lang-select { margin-left:10px; padding:10px; border-radius:8px; border:0; }
+
+  /* CTA store button */
+  .cta-wrap{ text-align:center; margin-top:18px }
+  .store-btn{
+    display:inline-block; padding:14px 26px; border-radius:14px; text-decoration:none;
+    font-weight:800; color:#111; background: linear-gradient(90deg,var(--gold1),var(--accent));
+    box-shadow:0 6px 30px rgba(255,183,3,0.18);
+    transition: all .25s ease; animation: pulse 1.6s infinite;
+  }
+  .store-btn:hover{ transform:scale(1.06); box-shadow:0 12px 40px rgba(255,183,3,0.3) }
+  @keyframes pulse{ 0%{box-shadow:0 6px 20px rgba(255,183,3,0.18)} 50%{box-shadow:0 18px 50px rgba(255,140,0,0.35)} 100%{box-shadow:0 6px 20px rgba(255,183,3,0.18)} }
+
+  /* translator floating */
+  .translator{ position:fixed; right:18px; bottom:18px; z-index:140;
+    background:linear-gradient(90deg,var(--gold1),#FF8C00); color:#111; padding:10px 14px; border-radius:999px; font-weight:700; cursor:pointer; box-shadow:0 8px 30px rgba(0,0,0,0.4)
+  }
+
+  /* responsive tweaks */
+  @media(max-width:800px){
+    .images img{ max-width:100%; width:90% }
+    header{ padding-top:110px }
+    .tours{ flex-direction:column; gap:10px }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">TimelessVoyage DZ</div>
+  <div class="links">
+    <a href="home.html">Home</a>
+    <a href="choix.html">Destinations</a>
+    <a href="#">About</a>
+  </div>
+</nav>
+
+<header>
+  <h1 id="placeTitle">Choose the Era</h1>
+  <p id="placeSubtitle">Select a historical era to explore for this destination.</p>
+</header>
+
+<main class="container">
+
+  <!-- Era selection card -->
+  <section class="card">
+    <h2 style="text-align:center">Choose the Era</h2>
+    <div class="era-row">
+      <button class="eraBtn" onclick="showEra('roman')">🏛 Roman Era</button>
+      <button class="eraBtn locked" title="Coming soon">✝ Christian Era (Coming Soon)</button>
+      <button class="eraBtn locked" title="Coming soon">☪ Islamic Era (Coming Soon)</button>
+      <button class="eraBtn locked" title="Coming soon">⚜ Modern Era (Coming Soon)</button>
+    </div>
+  </section>
+
+  <!-- ROMAN content -->
+  <section id="roman" class="card eraContent" style="display:none;">
+    <h2>Roman Annaba — Hippo Regius</h2>
+
+    <p>
+      Annaba - Hippo Regius — a royal harbour city of the Roman province of Africa.
+      Markets, basilicas, forums and baths made it a prosperous and cultured center of antiquity.
+    </p>
+
+    <div class="images" aria-hidden="false">
+      <img src="annaba1.jpg" alt="Annaba ruins 1" />
+      <img src="annaba2.jpg" alt="Annaba ruins 2" />
+      <img src="annaba3.jpg" alt="Annaba ruins 3" />
+    </div>
+
+    <div class="video">
+      <h3>Public FHD presentation</h3>
+      <iframe width="900" height="506" src="https://www.youtube.com/embed/vSfxRqytXhw" title="Annaba Video" frameborder="0" allowfullscreen></iframe>
+      <p style="margin-top:8px;color:#ddd"><small>Premium AR/VR experience (exclusive local video) unlocked after purchase.</small></p>
+    </div>
+
+    <div id="paidVideo" class="video" style="display:none;">
+      <h3>Exclusive Virtual Tour (Unlocked)</h3>
+      <video controls src="annaba.mp4" style="max-width:900px"></video>
+    </div>
+
+    <div class="slogan">"Step into the empire's timeless gateway."</div>
+
+    <!-- Tours -->
+    <div class="tours card" style="margin-top:18px;">
+      <div>
+        <button class="btn free" onclick="startFreeDemo()">Free Demo Tour</button>
+      </div>
+
+      <div>
+        <select id="langSelect" class="lang-select" title="Choose translation language">
+          <option value="ar">العربية</option>
+          <option value="fr">Français</option>
+          <option value="en">English</option>
+        </select>
+      </div>
+
+      <div>
+        <button class="btn pay" onclick="startPaidTour('AR')">🔒 AR Tour — Purchase</button>
+        <button class="btn pay" onclick="startPaidTour('VR')">🔒 VR Tour — Purchase</button>
+      </div>
+    </div>
+
+    <div class="cta-wrap">
+      <a class="store-btn" id="goStore" href="store.html?dest=Annaba">🛍️ Visit the Local Store</a>
+    </div>
+  </section>
+
+</main>
+
+<button class="translator" id="translatorBtn" title="Enable translation">🌍 Translator</button>
+
+<script>
+  // — try to load font.jpg background; if exists apply it, otherwise leave fallback gradient
+  (function tryBackground(){
+    const img = new Image();
+    img.onload = function(){
+      document.body.style.backgroundImage = "url('font.jpg')";
+      document.body.style.backgroundSize = "cover";
+      document.body.style.backgroundPosition = "center";
+      document.body.style.backgroundRepeat = "no-repeat";
+    };
+    img.onerror = function(){ /* keep gradient fallback */ };
+    img.src = 'font.jpg';
+  })();
+
+  // show/hide eras
+  function hideAllEras(){
+    document.querySelectorAll('.eraContent').forEach(el=>el.style.display='none');
+  }
+  function showEra(name){
+    hideAllEras();
+    const el = document.getElementById(name);
+    if(el){ el.style.display='block'; el.scrollIntoView({behavior:'smooth'}); }
+  }
+
+  // free demo (simple)
+  function startFreeDemo(){
+    alert("Starting free demo... (This is a demo experience.)");
+    // For demo you can autoplay the youtube iframe or show a guided text etc.
+    const iframe = document.querySelector('.video iframe');
+    if(iframe){
+      iframe.scrollIntoView({behavior:'smooth'});
+    }
+  }
+
+  // paid tours: simulate payment then unlock
+  function startPaidTour(type){
+    const lang = document.getElementById('langSelect').value || 'en';
+    const want = confirm("You are about to purchase the " + type + " Tour.\nProceed to payment simulation?");
+    if(!want) return;
+    // simulate payment success
+    setTimeout(()=> {
+      alert("Payment successful! " + type + " tour unlocked. (Language: " + lang + ")");
+      unlockPaidContent(type, lang);
+    }, 700);
+  }
+
+  function unlockPaidContent(type, lang){
+    // show paid video area
+    document.getElementById('paidVideo').style.display = 'block';
+    document.getElementById('paidVideo').scrollIntoView({behavior:'smooth'});
+    // optionally show message about the selected language
+    console.log("Unlocked " + type + " tour in " + lang);
+    // If you want to show AR/VR experience simulators, add UI or redirect here.
+  }
+
+  // translator demo (floating)
+  document.getElementById('translatorBtn').addEventListener('click', ()=>{
+    const lang = prompt("Choose language code for the tour: ar / fr / en", "ar");
+    if(!lang) return;
+    if(lang === 'ar') alert("✅ الترجمة العربية مفعلة (محاكاة).");
+    else if(lang === 'fr') alert("✅ Traduction française activée (simulation).");
+    else if(lang === 'en') alert("✅ English translation enabled (simulation).");
+    else alert("Language code not recognized.");
+  });
+
+  // parse URL params and auto-show era if requested
+  (function autoOpenFromParams(){
+    const params = new URLSearchParams(location.search);
+    const dest = params.get('dest');
+    const era = params.get('era');
+
+    // set header title if dest present
+    if(dest){
+      const titleEl = document.getElementById('placeTitle');
+      titleEl.innerText = dest + " — Choose the Era";
+      const sub = document.getElementById('placeSubtitle');
+      sub.innerText = "Destination: " + dest;
+    }
+
+    // If era param present -> open it
+    if(era){
+      if(era.toLowerCase() === 'roman') showEra('roman');
+      return;
+    }
+
+    // If destination Annaba then open roman by default (for direct navigation from choix.html)
+    if(dest && dest.toLowerCase()==='annaba'){
+      setTimeout(()=> showEra('roman'), 100);
+    }
+  })();
+</script>
+
+</body>
+</html>

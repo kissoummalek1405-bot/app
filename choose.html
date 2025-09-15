@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Choose Destination — TimelessVoyage DZ</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --gold1:#FFD700; --gold2:#FFB703; --card-bg: rgba(0,0,0,0.55);
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:'Poppins',sans-serif;
+      background: linear-gradient(135deg,#1e1f2a,#2c2b3b);
+      color:#fff;
+      min-height:100vh;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+    }
+
+    /* NAV */
+    nav{
+      position:fixed; top:0; left:0; right:0;
+      display:flex; justify-content:space-between; align-items:center;
+      padding:14px 28px;
+      background: rgba(0,0,0,0.45);
+      z-index:120;
+      backdrop-filter: blur(6px);
+    }
+    .logo{ font-family:'Cinzel Decorative',cursive; font-size:20px;
+           background: linear-gradient(90deg,var(--gold1),var(--gold2));
+           -webkit-background-clip:text; color:transparent; font-weight:700; }
+    nav .links a{ color:#fff; text-decoration:none; margin-left:18px; font-weight:600}
+    nav .links a:hover{ color:var(--gold1) }
+
+    /* header */
+    header{ padding:100px 20px 40px; text-align:center; }
+    header h1{
+      margin:0;
+      font-family:'Cinzel Decorative',cursive;
+      font-size:clamp(36px,6vw,72px);
+      background:linear-gradient(45deg,var(--gold1),#FFA500,var(--gold1));
+      -webkit-background-clip:text; color:transparent;
+      animation: shine 6s linear infinite; background-size:300% 300%;
+      letter-spacing:-2px;
+    }
+    @keyframes shine{ 0%{background-position:0% 50%} 100%{background-position:100% 50%} }
+    header p{ color:#f0e8d6; margin-top:8px; font-size:16px }
+
+    .container{ max-width:1100px; margin:0 auto; padding:18px; position:relative; z-index:10 }
+
+    /* cards */
+    .destinations{ display:flex; justify-content:center; gap:20px; flex-wrap:wrap; padding:20px }
+    .card{
+      position:relative; width:250px; height:160px;
+      border-radius:12px; overflow:hidden; cursor:pointer;
+      background:var(--card-bg);
+      transition: transform .3s ease, box-shadow .3s ease;
+      box-shadow:0 8px 30px rgba(0,0,0,0.5);
+    }
+    .card img{
+      width:100%; height:100%; object-fit:cover;
+      filter:brightness(0.7);
+      transition: filter .3s ease;
+    }
+    .card:hover{ transform:scale(1.05); box-shadow:0 12px 40px rgba(0,0,0,0.6) }
+    .card:hover img{ filter:brightness(1) }
+    .card h3{
+      position:absolute; bottom:10px; left:0; right:0;
+      margin:0; font-size:20px; color:white;
+      text-shadow:0 2px 6px rgba(0,0,0,0.7);
+    }
+
+    .locked img{ filter:grayscale(100%) brightness(0.4) }
+    .locked::after{
+      content:"🔒"; position:absolute; top:10px; right:10px; font-size:22px;
+    }
+
+    /* responsive */
+    @media(max-width:800px){
+      .card{ width:90%; height:200px }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">TimelessVoyage DZ</div>
+  <div class="links">
+    <a href="home.html">Home</a>
+    <a href="choix.html">Destinations</a>
+    <a href="#">About</a>
+  </div>
+</nav>
+
+<header>
+  <h1>CH<span style="margin-left:-14px;display:inline-block;">O</span>OSE YOUR DESTINATION</h1>
+  <p>Select your starting point for the timeless journey.</p>
+</header>
+
+<main class="container">
+  <section class="destinations">
+    <div class="card" onclick="window.location.href='era.html?dest=Annaba'">
+      <img src="annaba1.jpg" alt="Annaba">
+      <h3>Annaba (Hippo Regius)</h3>
+    </div>
+    <div class="card locked">
+      <img src="timgad.jpg" alt="Timgad">
+      <h3>Timgad</h3>
+    </div>
+    <div class="card locked">
+      <img src="tipaza.jpg" alt="Tipaza">
+      <h3>Tipaza</h3>
+    </div>
+    <div class="card locked">
+      <img src="djemila.jpg" alt="Djemila">
+      <h3>Djemila</h3>
+    </div>
+  </section>
+</main>
+
+<script>
+  // background fallback: try to load font.jpg
+  (function tryBackground(){
+    const img = new Image();
+    img.onload = function(){
+      document.body.style.backgroundImage = "url('font.jpg')";
+      document.body.style.backgroundSize = "cover";
+      document.body.style.backgroundPosition = "center";
+      document.body.style.backgroundRepeat = "no-repeat";
+    };
+    img.src = 'font.jpg';
+  })();
+</script>
+
+</body>
+</html>
